@@ -1,0 +1,6 @@
+
+{% for cats in cat  %}
+<li class="nav-item"><a class="nav-link active" href="{% url 'blog:category' cats.slug %}">{{cats.title}}</a></li>
+{% endfor %}
+    
+

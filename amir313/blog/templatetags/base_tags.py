@@ -1,7 +1,12 @@
 from django import template
-from ..models import Category
+from ..models import Category, Post
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.models import User
+
 
 register = template.Library()
+
+
 @register.simple_tag
 def title():
     return "وبلاگ امیر نبوی"

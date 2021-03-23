@@ -20,7 +20,7 @@ class PostAdmin(admin.ModelAdmin):
     ordering = ('-publish',)
     
     def cat_to_str(self,obj):
-        return ", ".join([category.title for category in obj.category.all()])
+        return ", ".join([category.title for category in obj.caegorty_published()])
     cat_to_str.short_description ="دسته بندی"
 
 

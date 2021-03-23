@@ -2,8 +2,15 @@ from django.db import models
 from django.utils import timezone
 from extentions.utils import jalali_convertor
 
+# tagmanagers
+
+
+class PostManager(models.Manager):
+    def published(self):
+        return self.filter(status='p')
 
 # Create your models here.
+
 
 class Category(models.Model):
     title = models.CharField(max_length=100, verbose_name="عنوان دسته بندی")
@@ -52,17 +59,19 @@ class Post(models.Model):
     def jpublish(self):
         return jalali_convertor(self.publish)
     jpublish.short_description = "زمان انتشار"
-    
-    # def caegorty_published(self):
-    #     return self.category.filter(status=True)
-
+    objects = PostManager()
+    def caegorty_published(self):
+        return self.category.filter(status=True)
 
 
 # slide moodels
 class Slider(models.Model):
+    STATUS_CHOICES = [('d', 'عدم نمایش'),('p', 'نمایش'), ]
     title = models.CharField(max_length=100, verbose_name="عنوان")
     link = models.CharField(max_length=100, verbose_name="آدرس دکمه")
     image = models.ImageField(upload_to="imgslider", verbose_name="تصویر")
+    status = models.CharField(
+        max_length=1, choices=STATUS_CHOICES, verbose_name="وضعیت",default='p')
 
     def __str__(self):
         return self.title
@@ -75,12 +84,12 @@ class Slider(models.Model):
 class Weblog_setting(models.Model):
     about_me = models.TextField(verbose_name="درباره من")
     STATUS_CHOICES = [
-        ('0', 'عدم نمایش'),
-        ('1', 'نمایش'),
+        ('d', 'عدم نمایش'),
+        ('p', 'نمایش'),
 
     ]
     status = models.CharField(
-        max_length=1,default='1', choices=STATUS_CHOICES, verbose_name="وضعیت")
+        max_length=1, default='1', choices=STATUS_CHOICES, verbose_name="وضعیت")
 
     class Meta:
         verbose_name = "تنظیمات سایت"
@@ -88,3 +97,6 @@ class Weblog_setting(models.Model):
 
     def __str__(self):
         return self.about_me
+
+
+

@@ -3,7 +3,7 @@
 
 
 {% block title %}
-| صفحه اصلی
+| {{categorys.title}}
 {% endblock title %}
 
 
@@ -66,11 +66,12 @@
     <!-- end carousel -->
 
     <!-- content -->
+    
     <div class="row" style="padding-top: 15px;">
         <div class="col-12 col-md-8">
 
-
-            {% for posts in categorys.postcat.all  %}
+<h3 class="alert alert-primary text-center" > {{categorys.title}} </h3>
+            {% for posts in categorys.postcat.published  %}
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col-auto d-none d-lg-block">
                     <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"

@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from extentions.utils import jalali_convertor
+from ckeditor.fields import RichTextField
 
 # tagmanagers
 
@@ -37,7 +38,9 @@ class Post(models.Model):
     slug = models.SlugField(max_length=200, unique=True, verbose_name="آدرس")
     category = models.ManyToManyField(
         Category, verbose_name="دسته بندی", related_name="postcat")
-    description = models.TextField(verbose_name="توضیحات")
+    # description = models.TextField(verbose_name="توضیحات")
+    description = RichTextField(blank=True,null=True, verbose_name="توضیحات")
+
     thumbnail = models.ImageField(
         upload_to="imgpost", height_field=None, width_field=None, max_length=None, verbose_name="تصویر")
     publish = models.DateTimeField(

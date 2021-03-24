@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from extentions.utils import jalali_convertor
-from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # tagmanagers
 
@@ -38,8 +38,8 @@ class Post(models.Model):
     slug = models.SlugField(max_length=200, unique=True, verbose_name="آدرس")
     category = models.ManyToManyField(
         Category, verbose_name="دسته بندی", related_name="postcat")
-    # description = models.TextField(verbose_name="توضیحات")
-    description = RichTextField(blank=True,null=True, verbose_name="توضیحات")
+    short_description = models.TextField(verbose_name="توضیحات کوتاه",null=True)
+    description = RichTextUploadingField(blank=True,null=True, verbose_name="توضیحات")
 
     thumbnail = models.ImageField(
         upload_to="imgpost", height_field=None, width_field=None, max_length=None, verbose_name="تصویر")
@@ -71,6 +71,8 @@ class Post(models.Model):
 class Slider(models.Model):
     STATUS_CHOICES = [('d', 'عدم نمایش'),('p', 'نمایش'), ]
     title = models.CharField(max_length=100, verbose_name="عنوان")
+    description = models.TextField(null=True, blank=True, verbose_name="توضیحات")
+    btn_txt =  models.CharField(max_length=100, verbose_name="عنوان دکمه")
     link = models.CharField(max_length=100, verbose_name="آدرس دکمه")
     image = models.ImageField(upload_to="imgslider", verbose_name="تصویر")
     status = models.CharField(

@@ -1,14 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Post, Category, Weblog_setting, Slider
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth.models import User
+
 # Create your views here.
 
 
-def home(request):
+def home(request, page=1):
     post_list = Post.objects.filter(status="p").order_by("-publish")
-    page = request.GET.get('page', 1)
-    paginator = Paginator(post_list,1)
+    paginator = Paginator(post_list, 4)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -32,8 +31,14 @@ def detail(request, slug):
     return render(request, "blog/detail.html", context)
 
 
-def category(request, slug):
+def category(request, slug, page=1):
+    category = get_object_or_404(Category, slug=slug, status=True)
+    post_list = category.postcat.published()
+    paginator = Paginator(post_list, 4)
+    posts = paginator.get_page(page)
+
     context = {
-        "categorys": get_object_or_404(Category, slug=slug, status=True)
+        "categorys": category,
+        "post": posts,
     }
     return render(request, "blog/category.html", context)

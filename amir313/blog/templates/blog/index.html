@@ -13,7 +13,7 @@
 
 
 <main class="container">
- 
+
     <!-- carousel -->
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" style="padding-top: 56px;">
         <ol class="carousel-indicators">
@@ -21,7 +21,7 @@
             <li data-bs-target="#myCarousel" data-bs-slide-to="1" class="active"></li>
             <li data-bs-target="#myCarousel" data-bs-slide-to="2" class=""></li>
         </ol>
-        
+
         <div class="carousel-inner">
             {% for slids in slid  %}
             <div class="carousel-item item{% if forloop.first %} active{% endif %}">
@@ -29,9 +29,10 @@
 
                 <div class="container">
                     <div class="carousel-caption text-start">
-                        <h2>پست اول</h2>
-                        <p>خلاصه متن پست</p>
-                        <p><a class="btn btn-lg btn-blue" href="#" role="button"> ادامه مطلب</a></p>
+                        <h2>{{slids.title}}</h2> </h2>
+                        <p>{{slids.description}}</p> </p>
+                        <p><a class="btn btn-lg btn-blue" href="{{slids.link}} " role="button">{{slids.btn_txt}} </a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -71,7 +72,7 @@
                     <h3> <strong class="d-inline-block mb-2 text-primary"> {{posts.title}} </strong></h3>
                     <div class="mb-1 text-muted"> {{posts.jpublish}} </div>
                     <p class="card-text mb-auto ">
-                        {{posts.description|linebreaks|truncatewords:58}}
+                        {{posts.short_description|linebreaks|truncatewords:58}}
                     </p>
                     <a href=" {% url 'blog:detail' posts.slug %}" class="stretched-link a_text">مطالعه بیشتر</a>
                 </div>
@@ -79,40 +80,48 @@
             </div>
             {% endfor %}
 
-
-
-
-
-
-
-
+<!-- pagination -->
 
             <div class="container ">
-               
+
+                {% if post.has_other_pages %}
                 <nav>
                     <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#">
-                                <span>&laquo;</span>
-                            </a>
+                        {% if post.has_previous %}
+                        <li class="page-item"><a class="page-link"
+                                href="{% url 'blog:home' post.previous_page_number %}">&laquo;</a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">۱</a></li>
-                        <li class="page-item"><a class="page-link" href="#">۲</a></li>
-                        <li class="page-item"><a class="page-link" href="#">۳</a></li>
-                        <li class="page-item"><a class="page-link" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">۴</a></li>
-                        <li class="page-item"><a class="page-link" href="#">۵</a></li>
+                        {% else %}
+                        <li class="page-item disabled"></li>
+                        {% endif %}
 
-                        <li class="page-item">
-                            <a class="page-link" href="#">
-                                <span>&raquo;</span>
-                            </a>
+                        {% for i in post.paginator.page_range %}
+                        {% if post.number == i %}
+                        
+                        <li class="page-item active" aria-current="page"><a class="page-link"
+                                href="{%  url 'blog:home'  i  %}">{{ i }}</a></li>
+                        {% else %}
+                        <li class="page-item"><a class="page-link" href="{%  url 'blog:home'  i  %}">{{ i }}</a></li>
+                        {% endif %}
+
+
+                        {% endfor %}
+
+
+                        {% if post.has_next %}
+                        <li class="page-item"><a class="page-link"
+                                href="{% url 'blog:home' post.next_page_number %}">&raquo;</a>
                         </li>
+                        {% else %}
+                        <li class="disabled page-item"></li>
+                        {% endif %}
                     </ul>
                 </nav>
+                {% endif %}
             </div>
-        </div>
+<!-- end pagination -->
 
+        </div>
         <div class="col-12 col-md-4">
             <!-- about me -->
 

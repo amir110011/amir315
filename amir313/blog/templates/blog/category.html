@@ -66,12 +66,13 @@
     <!-- end carousel -->
 
     <!-- content -->
-    
+
     <div class="row" style="padding-top: 15px;">
         <div class="col-12 col-md-8">
 
-<h3 class="alert alert-primary text-center" > {{categorys.title}} </h3>
-            {% for posts in categorys.postcat.published  %}
+            <h3 class="alert alert-primary text-center"> {{categorys.title}} </h3>
+            {% for posts in post  %}
+
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col-auto d-none d-lg-block">
                     <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"
@@ -98,33 +99,45 @@
 
 
 
-
-
-
-
             <div class="container ">
+
+                {% if post.has_other_pages %}
                 <nav>
                     <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#">
-                                <span>&laquo;</span>
-                            </a>
+                        {% if post.has_previous %}
+                        <li class="page-item"><a class="page-link"
+                                href="{% url 'blog:category' categorys.slug post.previous_page_number %}">&laquo;</a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">۱</a></li>
-                        <li class="page-item"><a class="page-link" href="#">۲</a></li>
-                        <li class="page-item"><a class="page-link" href="#">۳</a></li>
-                        <li class="page-item"><a class="page-link" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">۴</a></li>
-                        <li class="page-item"><a class="page-link" href="#">۵</a></li>
+                        {% else %}
+                        <li class="page-item disabled"></li>
+                        {% endif %}
 
-                        <li class="page-item">
-                            <a class="page-link" href="#">
-                                <span>&raquo;</span>
-                            </a>
+                        {% for i in post.paginator.page_range %}
+                        {% if post.number == i %}
+
+                        <li class="page-item active" aria-current="page"><a class="page-link"
+                                href="{%  url 'blog:category' categorys.slug i  %}">{{ i }}</a></li>
+                        {% else %}
+                        <li class="page-item"><a class="page-link"
+                                href="{%  url 'blog:category' categorys.slug i  %}">{{ i }}</a></li>
+                        {% endif %}
+
+                        {% endfor %}
+
+                        {% if post.has_next %}
+                        <li class="page-item"><a class="page-link"
+                                href="{% url 'blog:category' categorys.slug post.next_page_number %}">&raquo;</a>
                         </li>
+                        {% else %}
+                        <li class="disabled page-item"></li>
+                        {% endif %}
                     </ul>
                 </nav>
+                {% endif %}
             </div>
+
+
+
         </div>
 
         <div class="col-12 col-md-4">

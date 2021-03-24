@@ -28,9 +28,9 @@
                 <div class="text-center" style="padding-bottom: 30px;">
                     <img class="text-end" src=" {{post.thumbnail.url}} " alt=" {{post.title}} ">
                 </div>
-                <p> {{post.description|truncatewords:50}} </p>
+                <p> {{post.short_description|truncatewords:50}} </p>
                 <hr>
-                <p> {{post.description|linebreaks}} </p>
+                <p> {{post.description| safe|linebreaks}} </p>
             </article><!-- /.blog-post -->
 
           

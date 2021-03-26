@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from extentions.utils import jalali_convertor
 from ckeditor_uploader.fields import RichTextUploadingField
-
+from django.utils.html import format_html
 # tagmanagers
 
 
@@ -79,6 +79,9 @@ class Post(models.Model):
     def caegorty_published(self):
         return self.category.filter(status=True)
 
+    def img_tag(self):
+        return format_html( "<img src='{}' width=80 height=50>".format(self.thumbnail.url))
+    img_tag.short_description="تصویر"
 
 # slide moodels
 class Slider(models.Model):

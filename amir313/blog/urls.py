@@ -1,14 +1,14 @@
 
 from django.urls import path
-from . import views
+from .views import home, detail, category
 
 app_name = "blog"
 
 urlpatterns = [
-    path('', views.home, name="home"),
-    path('page/<int:page>', views.home, name="home"),
-    path('post/<slug:slug>', views.detail, name="detail"),
-    path('category/<slug:slug>', views.category, name="category"),
-    path('category/<slug:slug>/page/<int:page>', views.category, name="category"),
+    path('', home, name="home"),
+    path('page/<int:page>', home, name="home"),
+    path('post/<slug:slug>', detail, name="detail"),
+    path('category/<slug:slug>', category, name="category"),
+    path('category/<slug:slug>/page/<int:page>', category, name="category"),
 
 ]

@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'BYekan';
+    src: url('../fonts/Yekan.eot') format('eot'),
+        url('../fonts/Yekan.ttf') format('truetype'),
+        url('../fonts/Yekan.svg') format('svg'),
+        url('../fonts/Yekan.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Bold-webfont.woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Regular-webfont.woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Light-webfont.woff');
+    font-weight: 300;
+    font-style: normal;
+}

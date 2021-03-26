@@ -10,10 +10,18 @@ class PostManager(models.Manager):
     def published(self):
         return self.filter(status='p')
 
+
+class CategoryManager(models.Manager):
+    def active(self):
+        return self.filter(status=True)
+
+
 # Create your models here.
 
 
 class Category(models.Model):
+    parent = models.ForeignKey('self', default=None, null=True, blank=True,
+                               on_delete=models.SET_NULL, related_name='children', verbose_name='زیر دسته')
     title = models.CharField(max_length=100, verbose_name="عنوان دسته بندی")
     slug = models.SlugField(max_length=200, unique=True, verbose_name="آدرس")
     status = models.BooleanField(
@@ -23,10 +31,11 @@ class Category(models.Model):
     class Meta:
         verbose_name = "دسته بندی"
         verbose_name_plural = "دسته بندی ها"
-        ordering = ['position']
+        ordering = ['parent__id', 'position']
 
     def __str__(self):
         return self.title
+    objects = CategoryManager()
 
 
 class Post(models.Model):
@@ -38,8 +47,10 @@ class Post(models.Model):
     slug = models.SlugField(max_length=200, unique=True, verbose_name="آدرس")
     category = models.ManyToManyField(
         Category, verbose_name="دسته بندی", related_name="postcat")
-    short_description = models.TextField(verbose_name="توضیحات کوتاه",null=True)
-    description = RichTextUploadingField(blank=True,null=True, verbose_name="توضیحات")
+    short_description = models.TextField(
+        verbose_name="توضیحات کوتاه", null=True)
+    description = RichTextUploadingField(
+        blank=True, null=True, verbose_name="توضیحات")
 
     thumbnail = models.ImageField(
         upload_to="imgpost", height_field=None, width_field=None, max_length=None, verbose_name="تصویر")
@@ -62,21 +73,25 @@ class Post(models.Model):
     def jpublish(self):
         return jalali_convertor(self.publish)
     jpublish.short_description = "زمان انتشار"
+
     objects = PostManager()
+
     def caegorty_published(self):
         return self.category.filter(status=True)
 
 
 # slide moodels
 class Slider(models.Model):
-    STATUS_CHOICES = [('d', 'عدم نمایش'),('p', 'نمایش'), ]
+    STATUS_CHOICES = [('d', 'عدم نمایش'), ('p', 'نمایش'), ]
     title = models.CharField(max_length=100, verbose_name="عنوان")
-    description = models.TextField(null=True, blank=True, verbose_name="توضیحات")
-    btn_txt =  models.CharField(max_length=100, verbose_name="عنوان دکمه")
+    description = models.TextField(
+        null=True, blank=True, verbose_name="توضیحات")
+    btn_txt = models.CharField(
+        max_length=100, null=True, blank=True, verbose_name="عنوان دکمه")
     link = models.CharField(max_length=100, verbose_name="آدرس دکمه")
     image = models.ImageField(upload_to="imgslider", verbose_name="تصویر")
     status = models.CharField(
-        max_length=1, choices=STATUS_CHOICES, verbose_name="وضعیت",default='p')
+        max_length=1, choices=STATUS_CHOICES, verbose_name="وضعیت", default='p')
 
     def __str__(self):
         return self.title
@@ -102,6 +117,3 @@ class Weblog_setting(models.Model):
 
     def __str__(self):
         return self.about_me
-
-
-

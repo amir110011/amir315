@@ -1,0 +1,14 @@
+<ul class="dropdown-menu dropdown-menu-dark " data-bs-popper="none">
+
+    {% for cats in cats.children.active %}
+    <li class="{% if cats.children.active %} nav-item dropdown {% else %} nav-item {% endif %}">
+        <a class="{% if cats.children.active %} nav-link dropdown-toggle active " id="navbarDropdown" role="button"
+            data-bs-toggle="dropdown" {% else %} nav-link active"{% endif %}
+            href="{% url 'blog:category' cats.slug %}">{{cats.title}}</a>
+        {% if cats.children.active %}
+        {% include 'blog/partials/category_child.html' %}
+        {% endif %}
+
+    </li>
+    {% endfor %}
+</ul>

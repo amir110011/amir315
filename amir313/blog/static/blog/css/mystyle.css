@@ -17,7 +17,7 @@
   }
   .box-border{
       border: 2px solid #192a56;
-   
+
   }
     .a_text {
         color: black;
@@ -30,4 +30,8 @@
     .padding-10{
         padding:10px
     }
-    
+
+
+    ul{
+        white-space: nowrap;
+    }

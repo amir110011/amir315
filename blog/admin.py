@@ -36,16 +36,16 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('img_tag', 'title', 'slug',
+    list_display = ('img_tag', 'title','author', 'slug',
                     'jpublish', 'status', 'cat_to_str')
-    list_filter = ('status', 'publish')
+    list_filter = ('status', 'publish', 'author')
     search_fields = ('title', 'description')
     prepopulated_fields = {'slug': ('title',)}
     ordering = ('-publish',)
     actions = [make_published, make_draft]
 
     def cat_to_str(self,obj):
-        return ", ".join([category.title for category in obj.caegorty_published()])
+        return ", ".join([category.title for category in obj.category.active()])
     cat_to_str.short_description ="دسته بندی"
 
 

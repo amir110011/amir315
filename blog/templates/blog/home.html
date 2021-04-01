@@ -1,0 +1,73 @@
+{% extends 'blog/list.html' %}
+
+{% block page_top_title %}
+صفحه اصلی
+{% endblock page_top_title %}
+
+
+{% block carousel %}
+<!-- carousel -->
+<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-bs-target="#myCarousel" data-bs-slide-to="0" class=""></li>
+        <li data-bs-target="#myCarousel" data-bs-slide-to="1" class="active"></li>
+        <li data-bs-target="#myCarousel" data-bs-slide-to="2" class=""></li>
+    </ol>
+
+    <div class="carousel-inner">
+        {% for slids in slid  %}
+        <div class="carousel-item item{% if forloop.first %} active{% endif %}">
+            <img src=" {{slids.image.url}} " alt="{{slids.title}}">
+
+            <div class="container">
+                <div class="carousel-caption text-start">
+                    <h2>{{slids.title}}</h2>
+                    </h2>
+                    <p>{{slids.description}}</p>
+                    </p>
+                    <p><a class="btn btn-lg btn-blue" href="{{slids.link}} " role="button">{{slids.btn_txt}} </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+
+    </div>
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">قبلی</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">بعدی</span>
+    </a>
+</div>
+<!-- end carousel -->
+{% endblock carousel %}
+
+
+{% block page_title %}
+<h3 class="alert alert-primary text-center"> صفحه اصلی </h3>
+{% endblock page_title %}
+
+
+{% block previos_page %}
+{% url 'blog:home' post.previous_page_number  %}
+{% endblock previos_page %}
+
+
+{% block page_title_active %}
+{% url 'blog:home' i %}
+{% endblock page_title_active %}
+
+
+{% block page_item %}
+{% url 'blog:home' i %}
+{% endblock page_item %}
+
+
+{% block next_page %}
+{% url 'blog:home' post.next_page_number %}
+{% endblock next_page %}

@@ -1,0 +1,27 @@
+{% extends 'blog/list.html' %}
+{% block page_top_title %}
+کاربر {{author.get_full_name}}
+{% endblock page_top_title %}
+
+{% block page_title %}
+<h3 class="alert alert-primary text-center">کاربر {{author.get_full_name}} </h3>
+{% endblock page_title %}
+{% block previos_page %}
+{% url 'blog:author' author.username post.previous_page_number%}
+{% endblock previos_page %}
+
+
+{% block page_title_active %}
+{% url 'blog:author' author.username i %}
+{% endblock page_title_active %}
+
+
+{% block page_item %}
+
+{% url 'blog:author' author.username i %}
+{% endblock page_item %}
+
+
+{% block next_page %}
+{% url 'blog:author' author.username post.next_page_number%}
+{% endblock next_page %}

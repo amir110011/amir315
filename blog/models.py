@@ -3,21 +3,18 @@ from django.utils import timezone
 from extentions.utils import jalali_convertor
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.html import format_html
+from django.contrib.auth.models import User
+
 # tagmanagers
-
-
 class PostManager(models.Manager):
     def published(self):
         return self.filter(status='p')
-
 
 class CategoryManager(models.Manager):
     def active(self):
         return self.filter(status=True)
 
-
 # Create your models here.
-
 
 class Category(models.Model):
     parent = models.ForeignKey('self', default=None, null=True, blank=True,
@@ -44,16 +41,12 @@ class Post(models.Model):
         ('p', 'منتشر شده'),
     ]
     title = models.CharField(max_length=100, verbose_name="عنوان")
+    author= models.ForeignKey(User, null=True, on_delete=models.SET_NULL,related_name='post', verbose_name="نویسنده")
     slug = models.SlugField(max_length=200, unique=True, verbose_name="آدرس")
-    category = models.ManyToManyField(
-        Category, verbose_name="دسته بندی", related_name="postcat")
-    short_description = models.TextField(
-        verbose_name="توضیحات کوتاه", null=True)
-    description = RichTextUploadingField(
-        blank=True, null=True, verbose_name="توضیحات")
-
-    thumbnail = models.ImageField(
-        upload_to="imgpost", height_field=None, width_field=None, max_length=None, verbose_name="تصویر")
+    category = models.ManyToManyField(Category, verbose_name="دسته بندی", related_name="postcat")
+    short_description = models.TextField(verbose_name="توضیحات کوتاه", null=True)
+    description = RichTextUploadingField(blank=True, null=True, verbose_name="توضیحات")
+    thumbnail = models.ImageField(upload_to="imgpost", height_field=None, width_field=None, max_length=None, verbose_name="تصویر")
     publish = models.DateTimeField(
         default=timezone.now, verbose_name="زمان انتشار")
     created = models.DateTimeField(
@@ -75,9 +68,6 @@ class Post(models.Model):
     jpublish.short_description = "زمان انتشار"
 
     objects = PostManager()
-
-    def caegorty_published(self):
-        return self.category.filter(status=True)
 
     def img_tag(self):
         return format_html("<img src='{}' width=80 height=50>".format(self.thumbnail.url))

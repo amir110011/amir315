@@ -5,11 +5,14 @@ from django.views.generic import ListView
 from blog.models import Post
 # Create your views here.
 
-@login_required
-def home (request):
-    return render(request, "registration/home.html")
 
 
 class PostList(LoginRequiredMixin, ListView):
-    queryset=Post.objects.all()
     template_name = "registration/home.html"
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return self.Post.objects.all()
+        else:
+            return self.Post.objects.filter(author=self.request.user)
+
+

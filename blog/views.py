@@ -26,6 +26,7 @@ def category(request, slug, page=1):
     context = {
         "categorys": category,
         "post": posts,
+        "about": Weblog_setting.objects.all(),
     }
     return render(request, "blog/category_list.html", context)
 

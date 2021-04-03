@@ -1,9 +1,71 @@
 {% extends 'registration/base.html' %}
+{% load static %}
 
-            {% block main_title %}
-              لیست مقالات
-            {% endblock main_title %}
+{% block main_title %}
+لیست مقالات
+{% endblock main_title %}
+
+
 {% block main_content %}
-{{user.get_full_name}} خوش آمدید
 
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="input-group input-group-sm" style="width: 150px;">
+            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body table-responsive p-0">
+        <table class="table table-hover text-center">
+          <thead>
+            <tr>
+              <th>عنوان</th>
+              <th>تصویر</th>
+              <th>نویسنده</th>
+              <th>وضعیت</th>
+              <th>خلاصه متن</th>
+              <th>تاریخ ایجاد</th>
+              <th>دسته بندی</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {% for posts in object_list  %}
+            <tr>
+              <td>{{posts.title}}</td>
+              <td>{{posts.img_tag}}</td>
+              <td>{{posts.author}} </td>
+              <td>
+
+                {% if posts.status == 'p'%}
+                <span class="badge badge-success">منتشر شده</span>
+                <a class="badge badge-primary" href="{% url 'blog:detail' posts.slug %}" target="_blank">نمایش </a>
+                {% else %}
+                <span class="badge badge-danger">پیشنویس</span>
+                {% endif %}
+
+
+            <td>{{posts.short_description|truncatewords:20}} </td>
+            <td>{{posts.jpublish}} </td>
+            <td>{{posts.category_to_str}} </td>
+            </tr>
+            {% endfor %}
+
+
+          </tbody>
+        </table>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+</div>
 {% endblock main_content %}

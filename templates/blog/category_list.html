@@ -1,4 +1,7 @@
 {% extends 'blog/list.html' %}
+{% block page_top_title %}
+{{categorys.title}}
+{% endblock page_top_title %}
 
 {% block page_title %}
 <h3 class="alert alert-primary text-center"> {{categorys.title}} </h3>

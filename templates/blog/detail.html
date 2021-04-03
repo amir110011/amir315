@@ -9,7 +9,7 @@
 
 <main class="container">
 
-<!-- post detail -->
+    <!-- post detail -->
     <div class="row">
         <div class="col-12 col-md-8">
 
@@ -17,12 +17,15 @@
                 <h2 class="blog-post-title">{{post.title}}</h2>
                 <p class="blog-post-meta"> {{post.jpublish}} </p>
                 <div class="text-center" style="padding-bottom: 30px;">
-                    <img class="text-end" src=" {{post.thumbnail.url}} " alt=" {{post.title}} ">
+                    <img class="text-end" src=" {{post.thumbnail.url}} " width="230" alt=" {{post.title}} ">
                 </div>
-                <p> {{post.short_description|truncatewords:50}} </p>
+                <p class="col-auto d-none d-lg-block"> {{post.short_description|truncatewords:50}} </p>
                 <hr>
                 <p> {{post.description| safe|linebreaks}} </p>
-            <a class="text-right" href="{% url 'blog:author' post.author.username %}">نویسنده: {{post.author.get_full_name }}</a>
+                <div class="text-center">
+                    <a href="{% url 'blog:author' post.author.username %}">نویسنده:
+                    {{post.author.get_full_name }}</a>
+                </div>
             </article><!-- /.blog-post -->
 
 
@@ -35,10 +38,10 @@
                 <h3 class="bg-dark text-white text-center ">درباره من</h3>
                 <div class="mb-0 padding-10" style="text-align: justify;">
 
-                 {% for abouts in about %}
+                    {% for abouts in about %}
 
-                    {{abouts.about_me|linebreaks}}
-                 {% endfor %}
+                    {{abouts.about_me|linebreaks|truncatewords:50}}
+                    {% endfor %}
 
                 </div>
             </div>
@@ -101,6 +104,7 @@
                 </div>
             </div>
             <!-- archive -->
+
             <div class=" bg-light box-border" style="margin-top: 16px;">
                 <h3 class="bg-dark text-white text-center">آرشیو مطالب</h3>
                 <div class="padding-10">

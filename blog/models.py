@@ -73,6 +73,11 @@ class Post(models.Model):
         return format_html("<img src='{}' width=80 height=50>".format(self.thumbnail.url))
     img_tag.short_description = "تصویر"
 
+    def category_to_str(self):
+        return ", ".join([category.title for category in self.category.active()])
+    category_to_str.short_description = "دسته بندی"
+
+
 # slide moodels
 
 

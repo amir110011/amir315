@@ -19,7 +19,7 @@ def number_convertor(mystr):
     for e, p in nums.items():
         mystr=mystr.replace(e, p)
     return mystr
-    
+
 def jalali_convertor(time):
     time = timezone.localtime(time)
     jmonths = ["فروردین", "ادیبهشت", "خرداد", "تیر", "مرداد",
@@ -32,7 +32,7 @@ def jalali_convertor(time):
             time_to_list[1] = month
             break
 
-    output = "تاریخ انتشار {} {} {} ساعت {}:{} ".format(
+    output = "{} {} {}  {}:{} ".format(
         time_to_list[2], time_to_list[1], time_to_list[0], time.hour, time.minute,
     )
     return number_convertor(output)

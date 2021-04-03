@@ -1,0 +1,51 @@
+{% load static %}
+{% load widget_tweaks %}
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.79.0">
+    <title>ورود به صفحه مدیریت</title>
+
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'account/registration/signin.css' %}">
+
+</head>
+
+<body class="text-center">
+
+    <main class="form-signin" dir="rtl">
+        <form method="POST">
+            {% csrf_token %}
+            <img class="mb-4" src="{% static 'account/registration/icon.png' %}" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">لطفا وارد شوید</h1>
+
+            {%render_field form.username|add_class:"form-control" placeholder="نام کاربری"%}
+            {%render_field form.password|add_class:"form-control" placeholder="رمز ورود"%}
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> مرا بخاطر بسپار
+                </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">ورود</button>
+        </form>
+        {% if form.non_field_errors %}
+        <div class="errors container">
+            {% for error in form.non_field_errors %}
+            <span>{{error}}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </main>
+
+
+
+</body>
+
+</html>

@@ -18,6 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 LOGIN_REDIRECT_URL='account:home'
 LOGIN_URL='account:login'
+LOGOUT_REDIRECT_URL='account:login'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -42,9 +43,8 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'account.apps.AccountConfig',
     'extentions',
-    'ckeditor',
-    'ckeditor_uploader',
     'widget_tweaks',
+    'crispy_forms',
 ]
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
@@ -132,3 +132,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+AUTH_USER_MODEL='account.User'

@@ -1,12 +1,12 @@
 
 from django.contrib.auth import views
 from django.urls import path
-from .views import PostList
+from .views import *
 
 app_name = 'account'
 urlpatterns = [
     path('login/', views.LoginView.as_view(), name='login'),
-    #     path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
 
     #     path('password_change/', views.PasswordChangeView.as_view(),
     #          name='password_change'),
@@ -24,4 +24,7 @@ urlpatterns = [
 
 urlpatterns += [
     path('', PostList.as_view(), name='home'),
+    path('create', PostCreate.as_view(), name='postcreat'),
+    path('update/<int:pk>', PostUpdate.as_view(), name='postupdate'),
+    path('delete/<int:pk>', PostDelete.as_view(), name='postdelete'),
 ]

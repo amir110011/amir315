@@ -1,0 +1,40 @@
+
+
+{% extends 'registration/base.html' %}
+
+{% load static %}
+
+
+
+{% block main_title %}
+ <div class="content-wrapper">
+     <!-- Content Header (Page header) -->
+     <div class="content-header">
+         <div class="container-fluid">
+             <div class="row mb-2  bg-danger">
+                 <div class="col-sm-6 ">
+                     <h1 class="m-0 text-white">
+                         حذف پست
+                     </h1>
+                 </div><!-- /.col -->
+
+             </div><!-- /.row -->
+         </div><!-- /.container-fluid -->
+     </div>
+{% endblock main_title %}
+
+{% block main_content %}
+
+<div class="text-center bg-white">
+<form action="" method="post">
+    {% csrf_token %}
+
+    <div class="card-body">
+    <form method="post">{% csrf_token %}
+        <p>آیا میخواهید پست '{{ object }}' از کاربر {{user.get_full_name}} را حذف کنید؟</p>
+        <input class="btn btn-danger" type="submit" value="بله حذف کن">
+    </form>
+    </div>
+</form>
+</div>
+{% endblock %}

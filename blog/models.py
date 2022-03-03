@@ -1,20 +1,24 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from extentions.utils import jalali_convertor
-from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.html import format_html
-from django.contrib.auth.models import User
+from account.models import User
 
 # tagmanagers
+
+
 class PostManager(models.Manager):
     def published(self):
         return self.filter(status='p')
+
 
 class CategoryManager(models.Manager):
     def active(self):
         return self.filter(status=True)
 
 # Create your models here.
+
 
 class Category(models.Model):
     parent = models.ForeignKey('self', default=None, null=True, blank=True,
@@ -41,12 +45,17 @@ class Post(models.Model):
         ('p', 'منتشر شده'),
     ]
     title = models.CharField(max_length=100, verbose_name="عنوان")
-    author= models.ForeignKey(User, null=True, on_delete=models.SET_NULL,related_name='post', verbose_name="نویسنده")
+    author = models.ForeignKey(
+        User, null=True, on_delete=models.SET_NULL, related_name='post', verbose_name="نویسنده")
     slug = models.SlugField(max_length=200, unique=True, verbose_name="آدرس")
-    category = models.ManyToManyField(Category, verbose_name="دسته بندی", related_name="postcat")
-    short_description = models.TextField(verbose_name="توضیحات کوتاه", null=True)
-    description = RichTextUploadingField(blank=True, null=True, verbose_name="توضیحات")
-    thumbnail = models.ImageField(upload_to="imgpost", height_field=None, width_field=None, max_length=None, verbose_name="تصویر")
+    category = models.ManyToManyField(
+        Category, verbose_name="دسته بندی", related_name="postcat")
+    short_description = models.CharField(
+        max_length=200, verbose_name="توضیحات کوتاه", null=True)
+    description = models.TextField(
+        blank=True, null=True, verbose_name="توضیحات")
+    thumbnail = models.ImageField(upload_to="imgpost", height_field=None,
+                                  width_field=None, max_length=None, verbose_name="تصویر")
     publish = models.DateTimeField(
         default=timezone.now, verbose_name="زمان انتشار")
     created = models.DateTimeField(
@@ -55,6 +64,7 @@ class Post(models.Model):
         auto_now=True, verbose_name="زمان بروزرسانی")
     status = models.CharField(
         max_length=1, choices=STATUS_CHOICES, verbose_name="وضعیت")
+    is_special = models.BooleanField(default=False, verbose_name="مقاله ویژه")
 
     def __str__(self):
         return self.title
@@ -77,6 +87,8 @@ class Post(models.Model):
         return ", ".join([category.title for category in self.category.active()])
     category_to_str.short_description = "دسته بندی"
 
+    def get_absolute_url(self):
+        return reverse('account:home')
 
 # slide moodels
 
@@ -99,6 +111,7 @@ class Slider(models.Model):
     class Meta:
         verbose_name = "اسلایدر صفحه اصلی"
         verbose_name_plural = "اسلایدر صفحه اصلی"
+
 
 class Weblog_setting(models.Model):
     about_me = models.TextField(verbose_name="درباره من")

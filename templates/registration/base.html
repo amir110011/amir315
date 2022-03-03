@@ -55,22 +55,14 @@
       </ul>
 
 
-      <!-- Right navbar links -->
+      <!-- left navbar links -->
       <ul class="navbar-nav mr-auto-navbav">
 
- <!-- SEARCH FORM -->
-      <form class="form-inline ml-3">
-        <div class="input-group input-group-sm">
-          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-navbar" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
-
-
+        <li class="nav-item">
+          <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="{% url 'account:logout' %}">
+            <i class="fas fa-sign-out-alt"></i>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.navbar -->
@@ -79,34 +71,34 @@
     {% include 'registration/sidebar.html' %}
 
     <!-- Content Wrapper. Contains page content -->
+    {% block main_title %}
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
       <div class="content-header">
         <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
+          <div class="row mb-2  bg-primary">
+            <div class="col-sm-6 ">
               <h1 class="m-0 text-dark">
-                {% block main_title %}
                 عنوان صفحه
-                {% endblock main_title %}
               </h1>
             </div><!-- /.col -->
 
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
       </div>
+      {% endblock main_title %}
       <!-- /.content-header -->
 
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
+          <div class="content-wrapper">
 
+            {% block main_content %}
 
-          {% block main_content %}
+            {% endblock main_content %}
 
-          {% endblock main_content %}
-
-
+          </div>
 
         </div><!-- /.container-fluid -->
       </section>

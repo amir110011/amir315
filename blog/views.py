@@ -1,8 +1,8 @@
 from django.views.generic import ListView
-from django.contrib.auth.models import User
+from account.models import User
 from django.shortcuts import render, get_object_or_404
 from .models import Post, Category, Weblog_setting, Slider
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
 
 # Create your views here.
 
